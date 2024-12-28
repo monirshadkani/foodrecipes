@@ -9,6 +9,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use App\Entity\User;
 
@@ -19,7 +20,16 @@ class RecipeType extends AbstractType
         $builder
         ->add('label')
         ->add('description')
-        ->add('duration')
+        ->add('hours', IntegerType::class, [
+            'label' => 'Hours',
+            'attr' => ['min' => 0],
+            'mapped' => false,  // Donne l'heure depuis la durée en minutes
+        ])
+        ->add('minutes', IntegerType::class, [
+            'label' => 'Minutes',
+            'attr' => ['min' => 0, 'max' => 59],
+            'mapped' => false, // Donne les minutes restantes
+        ])
         ->add('personCount')
         ->add('photo', FileType::class, [
             'label' => 'Photo',

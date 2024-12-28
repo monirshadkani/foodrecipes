@@ -44,6 +44,12 @@ class RecipeController extends AbstractController
        
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $hours = $form->get('hours')->getData();
+            $minutes = $form->get('minutes')->getData();
+    
+           
+            $totalMinutes = ($hours * 60) + $minutes;
+            $recipe->setDuration($totalMinutes);
            
             $photoFile = $form->get('photo')->getData();
 
@@ -83,11 +89,20 @@ class RecipeController extends AbstractController
         $form = $this->createForm(RecipeType::class, $recipe);
         $form->handleRequest($request);
 
-
-       
+        $durationInMinutes = $recipe->getDuration();
+        $hours = intdiv($durationInMinutes, 60); 
+        $minutes = $durationInMinutes % 60; 
+        
         //recipe form part
         if ($form->isSubmitted() && $form->isValid()) {
             $photoFile = $form->get('photo')->getData();
+
+            $hours = $form->get('hours')->getData();
+            $minutes = $form->get('minutes')->getData();
+    
+           
+            $totalMinutes = ($hours * 60) + $minutes;
+            $recipe->setDuration($totalMinutes);
 
             if ($photoFile) {
                 $newFilename = uniqid() . '.' . $photoFile->guessExtension();
@@ -127,6 +142,8 @@ class RecipeController extends AbstractController
         return $this->render('recipe/edit.html.twig', [
             'form' => $form->createView(),
             'recipe' => $recipe,
+            'hours' => $hours,
+            'minutes' => $minutes,
             'commentForm' => $commentForm->createView(),
         ]);
     }

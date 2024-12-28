@@ -20,7 +20,14 @@
                 </div>
 
                 <div class="form-group">
-                    {{ form_row(form.duration, {'attr': {'class': 'w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500'}}) }}
+                    <div class="flex space-x-4">
+                        <div class="w-1/2">
+                            {{ form_row(form.hours, {'attr': {'class': 'w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500'}}) }}
+                        </div>
+                        <div class="w-1/2">
+                            {{ form_row(form.minutes, {'attr': {'class': 'w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500'}}) }}
+                        </div>
+                    </div>
                 </div>
 
                 <div class="form-group">
