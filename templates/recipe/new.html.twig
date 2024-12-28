@@ -65,7 +65,7 @@
     {{ form_end(form) }}
     </div>
 
-    {# JavaScript pour ajouter des ingrédients dynamiquement #}
+    
     <script>
         var addButton = document.getElementById('add_ingredient');
         var container = document.getElementById('recipe_recipeIngredients');
@@ -73,7 +73,7 @@
         var prototype = document.getElementById('recipe_recipeIngredients').dataset.prototype;
         
 
-         // Ajouter un bouton "Supprimer" pour chaque nouvel ingrédient
+         
         function addRemoveButton(ingredientDiv) {
             var removeButton = document.createElement('button');
             removeButton.type = 'button';
@@ -82,7 +82,7 @@
             ingredientDiv.appendChild(removeButton);
 
             removeButton.addEventListener('click', function () {
-                ingredientDiv.remove(); // Supprime le div contenant l'ingrédient
+                ingredientDiv.remove(); 
             });
         }
 
@@ -119,26 +119,22 @@
         
         
 
-       //Gestion de limage
 
-       // Sélectionner l'élément input de type "file" et l'élément img pour l'aperçu
     var inputFile = document.querySelector('input[type="file"]');
     var imageContainer = document.getElementById('imageContainer');
 
-    // Fonction de prévisualisation de l'image
     inputFile.addEventListener('change', function(event) {
-        var file = event.target.files[0]; // Récupérer le fichier sélectionné
+        var file = event.target.files[0]; 
         if (file) {
             var reader = new FileReader();
             
             reader.onload = function(e) {
-                // Mettre à jour l'élément <img> avec l'URL du fichier sélectionné
+                
                 imageContainer.src = e.target.result;
-                imageContainer.style.display = 'block'; // Afficher l'image (si elle était cachée)
+                imageContainer.style.display = 'block'; 
             };
             
-            reader.readAsDataURL(file); // Lire le fichier en tant qu'URL de données
-        }
+            reader.readAsDataURL(file); 
     });
     </script>
 {% endblock %}

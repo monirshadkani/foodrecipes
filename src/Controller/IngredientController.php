@@ -75,11 +75,11 @@ class IngredientController extends AbstractController
     public function delete(Ingredient $ingredient,EntityManagerInterface $entityManager): Response
     {
 
-         // Vérifiez si l'ingrédient est lié à une ou plusieurs recettes
+         
         if (!$ingredient->getRecipes()->isEmpty()) {
             $this->addFlash('error', 'Impossible de supprimer cet ingrédient car il est lié à une ou plusieurs recettes.');
 
-            return $this->redirectToRoute('ingredient_index'); // Redirigez vers la liste ou un autre chemin
+            return $this->redirectToRoute('ingredient_index');
         }
         
         $entityManager->remove($ingredient);

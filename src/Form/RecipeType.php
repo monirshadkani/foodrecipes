@@ -23,12 +23,12 @@ class RecipeType extends AbstractType
         ->add('hours', IntegerType::class, [
             'label' => 'Hours',
             'attr' => ['min' => 0],
-            'mapped' => false,  // Donne l'heure depuis la durée en minutes
+            'mapped' => false,  
         ])
         ->add('minutes', IntegerType::class, [
             'label' => 'Minutes',
             'attr' => ['min' => 0, 'max' => 59],
-            'mapped' => false, // Donne les minutes restantes
+            'mapped' => false, 
         ])
         ->add('personCount')
         ->add('photo', FileType::class, [
@@ -37,13 +37,13 @@ class RecipeType extends AbstractType
             'required' => false,
         ])
         ->add('recipeIngredients', CollectionType::class, [
-            'entry_type' => RecipeIngredientType::class,  // Formulaire pour RecipeIngredient
+            'entry_type' => RecipeIngredientType::class,  
             'allow_add' => true,
-            'by_reference' => false,  // Important pour que la collection soit mise à jour
+            'by_reference' => false,  
             'allow_delete' => true,
             'label' => "Ingrédients",
-            'prototype' => true,  // Pour générer le prototype d'ingrédient
-            'prototype_name' => '__name__',  // Nom utilisé dans le prototype (pour le JavaScript)
+            'prototype' => true,  
+            'prototype_name' => '__name__',  
             ]);
     }
 

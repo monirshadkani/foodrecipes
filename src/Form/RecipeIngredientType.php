@@ -17,25 +17,25 @@ class RecipeIngredientType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-        // Champ pour l'ingrédient (qui sera un choix parmi les ingrédients disponibles)
+        
         ->add('ingredients', EntityType::class, [
             'class' => Ingredient::class,
-            'choice_label' => 'label',  // Affichage du nom de chaque ingrédient
-            'placeholder' => 'Choisir un ingrédient',  // Option pour le premier champ vide
+            'choice_label' => 'label',  
+            'placeholder' => 'Choisir un ingrédient',  
             
             'choice_attr' => function (Ingredient $ingredient) {
-                return ['data-unit' => $ingredient->getUnit()]; // Ajoute data-unit
+                return ['data-unit' => $ingredient->getUnit()]; 
             },
         ])
-        // Champ pour la quantité
+       
         ->add('quantity', IntegerType::class, [
             'label' => 'Quantité',
-            'required' => false,  // Quantité peut être vide
-            'attr' => ['min' => 0],  // Empêcher les valeurs négatives ou nulles
+            'required' => false,  
+            'attr' => ['min' => 0],  
         ])->add('unitDisplay', TextType::class, [
-        'mapped' => false,  // Ce champ n'est pas mappé à une entité
+        'mapped' => false,  
         'label' => 'Unité',
-        'attr' => ['readonly' => true],  // Ce champ sera en lecture seule
+        'attr' => ['readonly' => true],  
     ]);
     }
 

@@ -58,11 +58,11 @@ class RecipeController extends AbstractController
         
                 try {
                     $photoFile->move(
-                        $this->getParameter('photos_directory'), // Paramètre à définir
+                        $this->getParameter('photos_directory'), 
                         $newFilename
                     );
                 } catch (FileException $e) {
-                    // Gérer les erreurs si nécessaire
+                    
                 }
         
                 $recipe->setPhoto('uploads/photos/' . $newFilename);
@@ -109,11 +109,11 @@ class RecipeController extends AbstractController
         
                 try {
                     $photoFile->move(
-                        $this->getParameter('photos_directory'), // Paramètre à définir
+                        $this->getParameter('photos_directory'), 
                         $newFilename
                     );
                 } catch (FileException $e) {
-                    // Gérer les erreurs si nécessaire
+                    
                 }
         
                 $recipe->setPhoto('uploads/photos/' . $newFilename);
@@ -164,11 +164,11 @@ class RecipeController extends AbstractController
         
         $ingredientIds = $request->query->all('ingredients');
 
-        // Si des ingrédients sont sélectionnés, récupérer les recettes correspondantes
+        
         if (!empty($ingredientIds)) {
             $recipes = $recipeRepository->findByIngredients($ingredientIds);
         } else {
-            // Si aucun ingrédient n'est sélectionné, afficher toutes les recettes
+            
             $recipes = $recipeRepository->findAll();
         }
 

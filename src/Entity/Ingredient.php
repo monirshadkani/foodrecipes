@@ -67,7 +67,7 @@ class Ingredient
      */
     public function getRecipes(): Collection
     {
-        // On récupère les recettes liées à cet ingrédient via la table intermédiaire
+        
         $recipes = new ArrayCollection();
         
         foreach ($this->getRecipeIngredients() as $recipeIngredient) {
@@ -79,20 +79,20 @@ class Ingredient
 
     public function addRecipe(Recipe $recipe, int $quantity): static
     {
-        // Vérifie si l'ingrédient est déjà lié à cette recette
+        
         foreach ($this->getRecipeIngredients() as $recipeIngredient) {
             if ($recipeIngredient->getRecipe() === $recipe) {
-                return $this; // Si l'ingrédient est déjà lié à cette recette, on arrête
+                return $this; 
             }
         }
 
-        // Si ce n'est pas le cas, on crée un nouvel objet RecipeIngredient
+       
         $recipeIngredient = new RecipeIngredient();
         $recipeIngredient->setRecipe($recipe);
-        $recipeIngredient->setIngredients($this); // On lie l'ingrédient à la recette
-        $recipeIngredient->setQuantity($quantity); // On définit la quantité
+        $recipeIngredient->setIngredients($this); 
+        $recipeIngredient->setQuantity($quantity); 
 
-        // On ajoute ce nouvel objet RecipeIngredient à la recette
+        
         $recipe->addRecipeIngredient($recipeIngredient);
 
         return $this;
@@ -100,12 +100,12 @@ class Ingredient
 
     public function removeRecipe(Recipe $recipe): static
     {
-        // On cherche et on supprime la relation de recette-ingredient
+        
         foreach ($this->getRecipeIngredients() as $recipeIngredient) {
             if ($recipeIngredient->getRecipe() === $recipe) {
-                $this->recipeIngredients->removeElement($recipeIngredient); // On supprime la relation
-                $recipeIngredient->setIngredients(null); // On dissocie l'ingrédient de la recette
-                $recipeIngredient->setRecipe(null); // On dissocie la recette de l'ingrédient
+                $this->recipeIngredients->removeElement($recipeIngredient); 
+                $recipeIngredient->setIngredients(null); 
+                $recipeIngredient->setRecipe(null); 
             }
         }
 
