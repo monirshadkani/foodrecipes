@@ -4,43 +4,63 @@
 {% block title %}Modifier la recette{% endblock %}
 
 {% block body %}
-    {% if recipe.user == app.user %} 
-        <h1>Modifier la recette</h1>
-    {% else %}
-        <h1>Visionner la recette</h1>
-    {% endif %}
+  <div class="container mx-auto p-8 bg-white rounded-lg shadow-lg mt-10">
+        
+    <div class="text-center mb-8">
+        {% if recipe.user == app.user %}
+            <h1 class="text-4xl font-extrabold text-gray-800">Modifier la recette</h1>
+        {% else %}
+            <h1 class="text-4xl font-extrabold text-gray-600">Visionner la recette</h1>
+        {% endif %}
+    </div>
 
     {{ form_start(form) }}
-        {{ form_row(form.label) }}
-        {{ form_row(form.description) }}
-        {{ form_row(form.duration) }}
-        {{ form_row(form.personCount) }}
-        
+        <div class="space-y-6">
+                <div class="form-group">
+                    {{ form_row(form.label, {'attr': {'class': 'w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500'}}) }}
+                </div>
 
-         {# Bouton "parcourir" #}
-        {{ form_row(form.photo) }}
+                <div class="form-group">
+                    {{ form_row(form.description, {'attr': {'class': 'w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500'}}) }}
+                </div>
 
-        {# Affichage de la photo sélectionnée (prévisualisation) #}
-        <div id="photo-preview" style="margin-top: 10px;">
-            {% if recipe.photo is not empty %}
-                <img id="imageContainer" src="{{ asset(recipe.photo) }}" alt="Photo de la recette" style="max-width: 200px; max-height: 200px;" />
+                <div class="form-group">
+                    {{ form_row(form.duration, {'attr': {'class': 'w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500'}}) }}
+                </div>
 
-                {% else %}
+                <div class="form-group">
+                    {{ form_row(form.personCount, {'attr': {'class': 'w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500'}}) }}
+                </div>
 
-                 <img id="imageContainer" src="#" alt="/!\ Aucune image sélectionée pour le moment ..." style="max-width: 200px; max-height: 200px;" />
-            {% endif %}
-        </div>
-        
-        <div id="recipe_ingredients1">
-            {{ form_row(form.recipeIngredients) }}
-        </div>
+                <div class="form-group">
+                    {{ form_row(form.photo, {'attr': {'class': 'w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500'}}) }}
+                </div>
 
-        {% if recipe.user == app.user %} 
-        {# Bouton pour ajouter un ingrédient #}
-        <button type="button" id="add_ingredient">Ajouter un ingrédient</button>
-        <button class="btn">Modifier la recette</button>
-        {% endif %}
+                <div id="photo-preview" class="mt-4">
+                    {% if recipe.photo is not empty %}
+                        <img id="imageContainer" src="{{ asset(recipe.photo) }}" alt="Photo de la recette" class="max-w-xs mx-auto rounded-lg shadow-md" />
+                    {% else %}
+                        <img id="imageContainer" src="#" alt="Aucune image sélectionnée" class="max-w-xs mx-auto rounded-lg shadow-md" />
+                    {% endif %}
+                </div>
+
+                <div id="recipe_ingredients1" class="space-y-4">
+                    {{ form_row(form.recipeIngredients) }}
+                </div>
+
+                {% if recipe.user == app.user %}
+                    <div class="flex justify-center mt-6 space-x-4">
+                        <button type="button" id="add_ingredient" class="bg-green-600 text-white px-6 py-3 rounded-full shadow-lg hover:bg-green-500 transition transform hover:scale-105">
+                            Ajouter un ingrédient
+                        </button>
+                        <button type="submit" class="bg-blue-600 text-white px-6 py-3 rounded-full shadow-lg hover:bg-blue-500 transition transform hover:scale-105">
+                            Modifier la recette
+                        </button>
+                    </div>
+                {% endif %}
+            </div>
     {{ form_end(form) }}
+    </div>
 
      {# JavaScript pour ajouter des ingrédients dynamiquement #}
     <script>

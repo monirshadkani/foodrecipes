@@ -12,6 +12,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use App\Repository\IngredientRepository;
+
 
 class RecipeController extends AbstractController
 {
@@ -117,5 +119,24 @@ class RecipeController extends AbstractController
         $entityManager->flush();
 
         return $this->redirectToRoute('app_recipe');
+    }
+
+    #[Route('makefood/recipes/search', name: 'recipe_search')]
+    public function search(Request $request, RecipeRepository $recipeRepository, IngredientRepository $ingredientRepository)
+    {
+        
+        $ingredientIds = $request->query->all('ingredients');
+        
+        // Si des ingrédients sont sélectionnés, récupérer les recettes correspondantes
+        if (!empty($ingredientIds)) {
+            $recipes = $recipeRepository->findByIngredients($ingredientIds);
+        } else {
+            // Si aucun ingrédient n'est sélectionné, afficher toutes les recettes
+            $recipes = $recipeRepository->findAll();
+        }
+
+        return $this->render('recipe/search_results.html.twig', [
+            'recipes' => $recipes,
+        ]);
     }
 }

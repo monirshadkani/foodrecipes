@@ -1,22 +1,32 @@
-{# templates/recipe/index.html.twig #}
 {% extends 'base.html.twig' %}
 
 {% block title %}Recettes{% endblock %}
 
 {% block body %}
-    <h1>Liste des recettes</h1>
-    <a href="{{ path('recipe_new') }}">Créer une nouvelle recette</a>
-    <ul>
-        {% for recipe in recipes %}
-            <li>
-                {{ recipe.label }}
-                {% if recipe.user == app.user %} 
-                    <a href="{{ path('recipe_edit', {'id': recipe.id}) }}">Modifier</a>
-                    <a href="{{ path('recipe_delete', {'id': recipe.id}) }}">Supprimer</a>
-                {% else %}
-                    <a href="{{ path('recipe_edit', {'id': recipe.id}) }}">Consulter</a>
-                {% endif %}
-            </li>
-        {% endfor %}
-    </ul>
+    <div class="container mx-auto p-6">
+        <h1 class="text-5xl font-extrabold text-gray-800 mb-8 text-center">Liste des Recettes</h1>
+
+        <div class="text-center mb-6">
+            <a href="{{ path('recipe_new') }}" class="bg-blue-600 text-white px-6 py-3 rounded-lg shadow-lg hover:bg-blue-700 transition">Créer une nouvelle recette</a>
+        </div>
+
+        <ul class="space-y-6">
+            {% for recipe in recipes %}
+                <li class="bg-white p-4 rounded-lg shadow-lg hover:shadow-xl transition">
+                    <div class="flex justify-between items-center">
+                        <span class="text-2xl font-semibold text-gray-800">{{ recipe.label }}</span>
+
+                        <div class="space-x-4">
+                            {% if recipe.user == app.user %} 
+                                <a href="{{ path('recipe_edit', {'id': recipe.id}) }}" class="text-blue-600 hover:text-blue-800 transition">Modifier</a>
+                                <a href="{{ path('recipe_delete', {'id': recipe.id}) }}" class="text-red-600 hover:text-red-800 transition">Supprimer</a>
+                            {% else %}
+                                <a href="{{ path('recipe_edit', {'id': recipe.id}) }}" class="text-green-600 hover:text-green-800 transition">Consulter</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
 {% endblock %}

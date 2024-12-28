@@ -36,6 +36,20 @@
                     </a>
                 </div>
             {% endif %}
+			
+							<form action="{{ path('recipe_search') }}" method="get">
+								<div class="space-y-4">
+									{% for ingredient in ingredients %}
+										<div class="flex items-center">
+											<input type="checkbox" name="ingredients[]" value="{{ ingredient.id }}" id="ingredient_{{ ingredient.id }}" class="mr-2">
+											<label for="ingredient_{{ ingredient.id }}" class="text-lg text-gray-200">{{ ingredient.label }}</label>
+										</div>
+									{% endfor %}
+								</div>
+
+								<button type="submit" class="mt-6 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-500 transition">Search</button>
+							</form>
+
         </div>
     </div>
 {% endblock %}
