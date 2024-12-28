@@ -4,7 +4,11 @@
 {% block title %}Modifier la recette{% endblock %}
 
 {% block body %}
-    <h1>Modifier la recette</h1>
+    {% if recipe.user == app.user %} 
+        <h1>Modifier la recette</h1>
+    {% else %}
+        <h1>Visionner la recette</h1>
+    {% endif %}
 
     {{ form_start(form) }}
         {{ form_row(form.label) }}
@@ -31,9 +35,11 @@
             {{ form_row(form.recipeIngredients) }}
         </div>
 
+        {% if recipe.user == app.user %} 
         {# Bouton pour ajouter un ingrédient #}
         <button type="button" id="add_ingredient">Ajouter un ingrédient</button>
         <button class="btn">Modifier la recette</button>
+        {% endif %}
     {{ form_end(form) }}
 
      {# JavaScript pour ajouter des ingrédients dynamiquement #}

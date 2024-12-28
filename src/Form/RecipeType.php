@@ -21,13 +21,6 @@ class RecipeType extends AbstractType
         ->add('description')
         ->add('duration')
         ->add('personCount')
-        ->add('user', EntityType::class, [
-            'class' => User::class,
-            'choice_label' => 'username', // Affiche le nom d'utilisateur
-            'placeholder' => 'Choisir un utilisateur',
-            'required' => false, // L'utilisateur peut être nul
-            'attr' => ['class' => 'user-select']
-        ])
         ->add('photo', FileType::class, [
             'label' => 'Photo',
             'mapped' => false, // On ne mappe pas ce champ directement à l'entité

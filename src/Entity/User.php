@@ -35,10 +35,12 @@ class User  implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?string $password = null;
 
-     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Recipe", mappedBy="user")
+
+    /**
+     * @var Collection<int, Recipe>
      */
-    private Collection $recipes;
+    #[ORM\OneToMany(targetEntity: Recipe::class, mappedBy: 'user')]
+    private ?Collection $recipes;
 
     public function __construct()
     {

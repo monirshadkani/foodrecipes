@@ -10,8 +10,12 @@
         {% for recipe in recipes %}
             <li>
                 {{ recipe.label }}
-                <a href="{{ path('recipe_edit', {'id': recipe.id}) }}">Modifier</a>
-                <a href="{{ path('recipe_delete', {'id': recipe.id}) }}">Supprimer</a>
+                {% if recipe.user == app.user %} 
+                    <a href="{{ path('recipe_edit', {'id': recipe.id}) }}">Modifier</a>
+                    <a href="{{ path('recipe_delete', {'id': recipe.id}) }}">Supprimer</a>
+                {% else %}
+                    <a href="{{ path('recipe_edit', {'id': recipe.id}) }}">Consulter</a>
+                {% endif %}
             </li>
         {% endfor %}
     </ul>

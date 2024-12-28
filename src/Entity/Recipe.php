@@ -38,11 +38,10 @@ class Recipe
     #[ORM\OneToMany(targetEntity: RecipeIngredient::class, mappedBy: 'recipe', cascade: ['persist', 'remove'], orphanRemoval: true)]
     private Collection $recipeIngredients;
 
-     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="recipes")
-     * @ORM\JoinColumn(nullable=true)
-     */
+    #[ORM\ManyToOne(targetEntity:User::class, inversedBy:"recipes")]
     private ?User $user = null;
+
+    
 
     public function __construct()
     {
