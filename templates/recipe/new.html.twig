@@ -1,0 +1,119 @@
+{# templates/recipe/new.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Create a new Recipe{% endblock %}
+
+{% block body %}
+    <h1>Create a new Recipe</h1>
+
+    {{ form_start(form) }}
+        {{ form_row(form.label) }}
+        {{ form_row(form.description) }}
+        {{ form_row(form.duration) }}
+        {{ form_row(form.personCount) }}
+
+
+        {# Bouton "parcourir" #}
+        {{ form_row(form.photo) }}
+
+        {# Affichage de la photo sélectionnée (prévisualisation) #}
+        <div id="photo-preview" style="margin-top: 10px;">
+            {% if recipe.photo is not empty %}
+                <img id="imageContainer" src="{{ asset(recipe.photo) }}" alt="Photo de la recette" style="max-width: 200px; max-height: 200px;" />
+
+                {% else %}
+
+                 <img id="imageContainer" src="#" alt="/!\ Aucune image sélectionée pour le moment ..." style="max-width: 200px; max-height: 200px;" />
+            {% endif %}
+        </div>
+
+
+        {# Affichage des ingrédients avec leurs quantités #}
+        <div id="recipe_ingredients1">
+            {{ form_row(form.recipeIngredients) }}
+        </div>
+
+        {# Bouton pour ajouter un ingrédient #}
+        <button type="button" id="add_ingredient">Ajouter un ingrédient</button>
+
+        <button class="btn btn-primary">Save</button>
+    {{ form_end(form) }}
+
+    {# JavaScript pour ajouter des ingrédients dynamiquement #}
+    <script>
+        var addButton = document.getElementById('add_ingredient');
+        var container = document.getElementById('recipe_recipeIngredients');
+       
+        var prototype = document.getElementById('recipe_recipeIngredients').dataset.prototype;
+        
+
+         // Ajouter un bouton "Supprimer" pour chaque nouvel ingrédient
+        function addRemoveButton(ingredientDiv) {
+            var removeButton = document.createElement('button');
+            removeButton.type = 'button';
+            removeButton.textContent = 'Supprimer';
+            removeButton.className = 'remove-ingredient';
+            ingredientDiv.appendChild(removeButton);
+
+            removeButton.addEventListener('click', function () {
+                ingredientDiv.remove(); // Supprime le div contenant l'ingrédient
+            });
+        }
+
+        addButton.addEventListener('click', function() {
+            var newIngredientForm = prototype.replace(/__name__/g, container.children.length);
+            var div = document.createElement('div');
+            div.innerHTML = newIngredientForm;
+            addRemoveButton(div);
+            container.appendChild(div);
+            addDynamicUnitChange(div);
+        });
+
+        function addDynamicUnitChange(ingredientDiv){
+            
+            const select = ingredientDiv.querySelector('select'); // Cherche le premier <select> dans la div
+                if (select) {
+                    select.onchange = function () {
+                        
+                        const selectedOption = select.options[select.selectedIndex];
+                        const unit = selectedOption.getAttribute('data-unit');
+                        
+                        if (selectedOption.value) {
+                            const unitDisplay = ingredientDiv.querySelector('[name*="unitDisplay"]');
+                            unitDisplay.value = unit
+                        }
+                        else
+                        {
+                           unitDisplay.value = ''; 
+                        }
+                    };
+                }
+                    
+        }
+        
+        
+
+       //Gestion de limage
+
+       // Sélectionner l'élément input de type "file" et l'élément img pour l'aperçu
+    var inputFile = document.querySelector('input[type="file"]');
+    var imageContainer = document.getElementById('imageContainer');
+
+    // Fonction de prévisualisation de l'image
+    inputFile.addEventListener('change', function(event) {
+        var file = event.target.files[0]; // Récupérer le fichier sélectionné
+        if (file) {
+            var reader = new FileReader();
+            
+            reader.onload = function(e) {
+                // Mettre à jour l'élément <img> avec l'URL du fichier sélectionné
+                imageContainer.src = e.target.result;
+                imageContainer.style.display = 'block'; // Afficher l'image (si elle était cachée)
+            };
+            
+            reader.readAsDataURL(file); // Lire le fichier en tant qu'URL de données
+        }
+    });
+    </script>
+{% endblock %}

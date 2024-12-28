@@ -1,0 +1,31 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Home
+{% endblock %}
+
+{% block body %}
+	<div class="container mx-auto text-center mt-10">
+		<h1 class="text-5xl font-bold text-gray-100 tracking-wide">Welcome to the Foodiepedia</h1>
+		<p class="text-lg text-gray-400 mt-4">
+			✨ Find and create recipes, it's time to cultivate your culinary magic ! ✨</p>
+
+		<div class="mt-8">
+			{% if app.user %}
+				<h2 class="text-3xl text-gray-200">Hello,
+					{{ app.user.username }}!</h2>
+				<div
+					class="mt-6 flex justify-center space-x-4">
+					<a href="{{ path('recipe_new') }}" class="bg-gray-700 text-gray-200 px-4 py-2 rounded-lg hover:bg-gray-600 hover:text-white transition">Create Recipe</a>
+					                   {#  <a href="{{ path('ingredient_index') }}" class="bg-gray-700 text-gray-200 px-4 py-2 rounded-lg hover:bg-gray-600 hover:text-white transition">Manage Ingredients</a> #}
+					<a href="{{ path('app_logout') }}" class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition">Log Out</a>
+				</div>
+                
+			{% else %}
+				<div class="mt-6 flex justify-center space-x-4">
+					<a href="{{ path('app_login') }}" class="bg-gray-700 text-gray-200 px-4 py-2 rounded-lg hover:bg-gray-600 hover:text-white transition">Log In</a>
+					<a href="{{ path('app_register') }}" class="bg-green-700 text-gray-200 px-4 py-2 rounded-lg hover:bg-green-600 hover:text-white transition">Sign Up</a>
+				</div>
+			{% endif %}
+		</div>
+	</div>
+{% endblock %}

@@ -1,0 +1,18 @@
+{# templates/recipe/index.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}Recettes{% endblock %}
+
+{% block body %}
+    <h1>Liste des recettes</h1>
+    <a href="{{ path('recipe_new') }}">Créer une nouvelle recette</a>
+    <ul>
+        {% for recipe in recipes %}
+            <li>
+                {{ recipe.label }}
+                <a href="{{ path('recipe_edit', {'id': recipe.id}) }}">Modifier</a>
+                <a href="{{ path('recipe_delete', {'id': recipe.id}) }}">Supprimer</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

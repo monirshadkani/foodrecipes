@@ -1,0 +1,11 @@
+{# templates/ingredient/new.html.twig #}
+
+<h1>Ajouter un Nouvel Ingrédient</h1>
+
+{{ form_start(form) }}
+    {{ form_row(form.label) }}
+    {{ form_row(form.unit) }}
+    <button class="btn">Ajouter l'ingrédient</button>
+{{ form_end(form) }}
+
+<a href="{{ path('ingredient_index') }}">Retour à la liste des ingrédients</a>
