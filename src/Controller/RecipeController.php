@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
-use App\Entity\Ingredient;
+
 use App\Entity\Recipe;
+use App\Entity\Comment;
+use App\Form\CommentType;
 use App\Form\RecipeType;
 use App\Repository\RecipeRepository;
 use Symfony\Component\HttpFoundation\Request;
@@ -79,9 +81,11 @@ class RecipeController extends AbstractController
     public function edit(Request $request,EntityManagerInterface $entityManager, Recipe $recipe): Response
     {
         $form = $this->createForm(RecipeType::class, $recipe);
-
         $form->handleRequest($request);
 
+
+       
+        //recipe form part
         if ($form->isSubmitted() && $form->isValid()) {
             $photoFile = $form->get('photo')->getData();
 
@@ -105,9 +109,25 @@ class RecipeController extends AbstractController
             return $this->redirectToRoute('app_recipe');
         }
 
+        //Comment form part
+        $comment = new Comment();
+        $commentForm = $this->createForm(CommentType::class, $comment);
+        $commentForm->handleRequest($request);
+        if ($commentForm->isSubmitted() && $commentForm->isValid()) {
+            $comment->setRecipe($recipe);
+            $comment->setUser($this->getUser());
+            $comment->setCreatedAt(new \DateTime());
+    
+            $entityManager->persist($comment);
+            $entityManager->flush();
+    
+            return $this->redirectToRoute('recipe_edit', ['id' => $recipe->getId()]);
+        }
+
         return $this->render('recipe/edit.html.twig', [
             'form' => $form->createView(),
             'recipe' => $recipe,
+            'commentForm' => $commentForm->createView(),
         ]);
     }
 
@@ -126,7 +146,7 @@ class RecipeController extends AbstractController
     {
         
         $ingredientIds = $request->query->all('ingredients');
-        
+
         // Si des ingrédients sont sélectionnés, récupérer les recettes correspondantes
         if (!empty($ingredientIds)) {
             $recipes = $recipeRepository->findByIngredients($ingredientIds);

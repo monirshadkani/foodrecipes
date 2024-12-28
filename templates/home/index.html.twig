@@ -16,6 +16,9 @@
             {% if app.user %}
                 <h2 class="text-4xl text-yellow-600">Hello, <span class="text-yellow-400">{{ app.user.username }}!</span></h2>
                 <div class="mt-8 flex justify-center space-x-6">
+					<a href="{{ path('app_recipe') }}" class="bg-gradient-to-r from-purple-600 to-blue-600 text-white px-6 py-3 rounded-full shadow-lg hover:from-blue-500 hover:to-purple-500 transition-all transform hover:scale-105">
+                        All recipes
+                    </a>
                     <a href="{{ path('recipe_new') }}" class="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-full shadow-lg hover:from-blue-500 hover:to-purple-500 transition-all transform hover:scale-105">
                         Create Recipe
                     </a>
@@ -39,15 +42,17 @@
 			
 							<form action="{{ path('recipe_search') }}" method="get">
 								<div class="space-y-4">
-									{% for ingredient in ingredients %}
-										<div class="flex items-center">
-											<input type="checkbox" name="ingredients[]" value="{{ ingredient.id }}" id="ingredient_{{ ingredient.id }}" class="mr-2">
-											<label for="ingredient_{{ ingredient.id }}" class="text-lg text-gray-200">{{ ingredient.label }}</label>
-										</div>
-									{% endfor %}
+									<div class="flex flex-wrap space-x-6 mb-6">
+										{% for ingredient in ingredients %}
+											<div class="flex items-center">
+												<input type="checkbox" name="ingredients[]" value="{{ ingredient.id }}" id="ingredient_{{ ingredient.id }}" class="mr-2 rounded-md border-gray-300 text-blue-600 focus:ring-blue-500">
+												<label for="ingredient_{{ ingredient.id }}" class="text-lg text-gray-800 font-medium">{{ ingredient.label }}</label>
+											</div>
+										{% endfor %}
+									</div>
 								</div>
 
-								<button type="submit" class="mt-6 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-500 transition">Search</button>
+								<button type="submit" class="mt-6 bg-blue-600 text-white px-6 py-3 rounded-lg shadow-md hover:bg-blue-500 transition-all">Search</button>
 							</form>
 
         </div>

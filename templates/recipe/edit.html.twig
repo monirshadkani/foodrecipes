@@ -62,6 +62,41 @@
     {{ form_end(form) }}
     </div>
 
+    <!-- Section des commentaires -->
+    <div class="mt-8">
+        <h2 class="text-2xl font-semibold text-gray-700 mb-4">Commentaires</h2>
+
+        <!-- Historique des commentaires -->
+        <div id="comments-history" class="space-y-4 mb-6">
+            {% for comment in recipe.comments %}
+                <div class="bg-gray-100 p-4 rounded-lg shadow-md">
+                    <p class="font-medium text-gray-800">{{ comment.user.username }} a écrit :</p>
+                    <p class="text-gray-600">{{ comment.content }}</p>
+                    <p class="text-sm text-gray-500 mt-2">Posté le {{ comment.createdAt|date('d/m/Y H:i') }}</p>
+                </div>
+            {% else %}
+                <p>Aucun commentaire pour cette recette.</p>
+            {% endfor %}
+        </div>
+
+        <!-- Formulaire de nouveau commentaire -->
+        {% if app.user %}
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <h3 class="text-xl font-semibold text-gray-700 mb-4">Ajouter un commentaire</h3>
+                {{ form_start(commentForm) }}
+                    <div class="form-group mb-4">
+                        {{ form_row(commentForm.content, {'attr': {'class': 'w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500'}}) }}
+                    </div>
+                    <button type="submit" class="bg-blue-600 text-white px-6 py-3 rounded-full shadow-lg hover:bg-blue-500 transition transform hover:scale-105">
+                        Ajouter le commentaire
+                    </button>
+                {{ form_end(commentForm) }}
+            </div>
+        {% else %}
+            <p class="text-gray-600 mt-4">Vous devez être connecté pour ajouter un commentaire.</p>
+        {% endif %}
+    </div>
+
      {# JavaScript pour ajouter des ingrédients dynamiquement #}
     <script>
         var addButton = document.getElementById('add_ingredient');

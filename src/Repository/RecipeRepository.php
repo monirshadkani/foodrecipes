@@ -19,14 +19,25 @@ class RecipeRepository extends ServiceEntityRepository
     public function findByIngredients(array $ingredientIds)
     {
         return $this->createQueryBuilder('r')
-            ->innerJoin('r.recipeIngredients', 'ri') // Jointure avec la table intermédiaire RecipeIngredient
-            ->innerJoin('ri.ingredients', 'i') // Jointure avec les ingrédients via RecipeIngredient
-            ->andWhere('i.id IN (:ingredientIds)') // Filtre par les IDs des ingrédients sélectionnés
-            ->setParameter('ingredientIds', $ingredientIds) // On passe les ingrédients sélectionnés
-            ->groupBy('r.id') // Groupement des résultats par recette
-            ->having('COUNT(DISTINCT i.id) = :ingredientCount') // Vérifie que la recette contient exactement tous les ingrédients
-            ->setParameter('ingredientCount', count($ingredientIds)) // Le nombre d'ingrédients sélectionnés
+            ->innerJoin('r.recipeIngredients', 'ri') 
+            ->innerJoin('ri.ingredients', 'i') 
+            ->andWhere('i.id IN (:ingredientIds)') 
+            ->setParameter('ingredientIds', $ingredientIds) 
+            ->groupBy('r.id') 
+            ->having('COUNT(DISTINCT i.id) = :ingredientCount') 
+            ->setParameter('ingredientCount', count($ingredientIds)) 
             ->getQuery()
             ->getResult();
+    }
+
+    public function findOneWithComments(int $id)
+    {
+        return $this->createQueryBuilder('r')
+            ->leftJoin('r.comments', 'c')
+            ->addSelect('c')
+            ->where('r.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 }

@@ -3,16 +3,21 @@
 {% block title %}Search Results{% endblock %}
 
 {% block body %}
-    <h1>Search Results</h1>
-    {% if recipes is empty %}
-        <p>No recipes found for the selected ingredients.</p>
-    {% else %}
-        <ul>
-            {% for recipe in recipes %}
-                <li>
-                    <a href="{{ path('recipe_edit', {'id': recipe.id}) }}">{{ recipe.label }}</a>
-                </li>
-            {% endfor %}
-        </ul>
-    {% endif %}
+    <div class="container mx-auto p-8 bg-white rounded-lg shadow-lg mt-10">
+        <h1 class="text-3xl font-extrabold text-gray-800 text-center mb-6">Search Results</h1>
+        
+        {% if recipes is empty %}
+            <p class="text-lg text-gray-600 text-center">No recipes found for the selected ingredients.</p>
+        {% else %}
+            <ul class="space-y-4">
+                {% for recipe in recipes %}
+                    <li class="flex justify-between items-center p-4 border-b border-gray-300 rounded-lg hover:bg-gray-100 transition">
+                        <a href="{{ path('recipe_edit', {'id': recipe.id}) }}" class="text-xl text-blue-600 font-semibold hover:text-blue-800 transition">
+                            {{ recipe.label }}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
 {% endblock %}
