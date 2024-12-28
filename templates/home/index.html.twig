@@ -4,28 +4,38 @@
 {% endblock %}
 
 {% block body %}
-	<div class="container mx-auto text-center mt-10">
-		<h1 class="text-5xl font-bold text-gray-100 tracking-wide">Welcome to the Foodiepedia</h1>
-		<p class="text-lg text-gray-400 mt-4">
-			✨ Find and create recipes, it's time to cultivate your culinary magic ! ✨</p>
+    <div class="container mx-auto text-center mt-20 px-6">
+        <h1 class="text-6xl font-extrabold text-white tracking-wide leading-tight text-yellow-800">
+            Welcome to the <span class="text-yellow-400">Foodiepedia</span>
+        </h1>
+        <p class="text-xl text-gray-500 mt-6 max-w-2xl mx-auto">
+            ✨ Find and create recipes, it's time to cultivate your culinary magic! ✨
+        </p>
 
-		<div class="mt-8">
-			{% if app.user %}
-				<h2 class="text-3xl text-gray-200">Hello,
-					{{ app.user.username }}!</h2>
-				<div
-					class="mt-6 flex justify-center space-x-4">
-					<a href="{{ path('recipe_new') }}" class="bg-gray-700 text-gray-200 px-4 py-2 rounded-lg hover:bg-gray-600 hover:text-white transition">Create Recipe</a>
-					                   {#  <a href="{{ path('ingredient_index') }}" class="bg-gray-700 text-gray-200 px-4 py-2 rounded-lg hover:bg-gray-600 hover:text-white transition">Manage Ingredients</a> #}
-					<a href="{{ path('app_logout') }}" class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition">Log Out</a>
-				</div>
-                
-			{% else %}
-				<div class="mt-6 flex justify-center space-x-4">
-					<a href="{{ path('app_login') }}" class="bg-gray-700 text-gray-200 px-4 py-2 rounded-lg hover:bg-gray-600 hover:text-white transition">Log In</a>
-					<a href="{{ path('app_register') }}" class="bg-green-700 text-gray-200 px-4 py-2 rounded-lg hover:bg-green-600 hover:text-white transition">Sign Up</a>
-				</div>
-			{% endif %}
-		</div>
-	</div>
+        <div class="mt-12">
+            {% if app.user %}
+                <h2 class="text-4xl text-yellow-600">Hello, <span class="text-yellow-400">{{ app.user.username }}!</span></h2>
+                <div class="mt-8 flex justify-center space-x-6">
+                    <a href="{{ path('recipe_new') }}" class="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-full shadow-lg hover:from-blue-500 hover:to-purple-500 transition-all transform hover:scale-105">
+                        Create Recipe
+                    </a>
+                    <a href="{{ path('ingredient_index') }}" class="bg-gradient-to-r from-green-600 to-teal-500 text-white px-6 py-3 rounded-full shadow-lg hover:from-green-500 hover:to-teal-400 transition-all transform hover:scale-105">
+                        Manage Ingredients
+                    </a>
+                    <a href="{{ path('app_logout') }}" class="bg-gradient-to-r from-red-600 to-orange-600 text-white px-6 py-3 rounded-full shadow-lg hover:from-red-500 hover:to-orange-500 transition-all transform hover:scale-105">
+                        Log Out
+                    </a>
+                </div>
+            {% else %}
+                <div class="mt-8 flex justify-center space-x-6">
+                    <a href="{{ path('app_login') }}" class="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-full shadow-lg hover:from-blue-500 hover:to-purple-500 transition-all transform hover:scale-105">
+                        Log In
+                    </a>
+                    <a href="{{ path('app_register') }}" class="bg-gradient-to-r from-green-600 to-teal-500 text-white px-6 py-3 rounded-full shadow-lg hover:from-green-500 hover:to-teal-400 transition-all transform hover:scale-105">
+                        Sign Up
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
 {% endblock %}
